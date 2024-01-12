@@ -4,6 +4,15 @@
   </div>
   <div class="card-body">
     <p class="strong"> Criado por: <%= @recipe.user.email %> </p>
+    <% if user_signed_in? %>
+      <%if current_user.followings.include?(@recipe.user) %>
+        <%= button_to 'Deixar de Seguir', follows_path, params: {followed_id: @recipe.user.id, recipe_id: @recipe.id} %> 
+      <% else %>
+        <%= button_to 'Seguir Cheff', follows_path, params: {followed_id: @recipe.user.id, recipe_id: @recipe.id} %>
+      <% end %>
+    <% else %>
+      <p>Faça login para seguir esse Cheff</p>
+    <% end %>
     <p class="strong"> Tipo de Receita: <%= @recipe.recipe_type.name %> </p>
     <p class="strong"> Tempo de preparo: <%= @recipe.cook_time %> minutos </p>
     <p class="strong"> Ingredientes: <%= @recipe.ingredients %> </p>
